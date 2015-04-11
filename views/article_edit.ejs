@@ -5,7 +5,16 @@
   <title>Lemur Learns - <%= article.title %></title>
 </head>
 <body>
-<nav><a href="/">index of articles</a></nav>
+<nav><a href="/articles/edit">index of articles</a></nav>
+
+<form action="/article/<%= article.id %>?_method=put" method="POST">
+<label for="title">title</label><input type="text" name="title" value="<%= article.title %>">
+<label for="summary">summary</label><textarea name="summary"><%= article.summary %></textarea>
+<label for="image_url">image url</label><input type="text" name="image_url" value="<%= article.image_url %>">
+<label for="created">date</label><input type="text" name="created" value="<%= article.created %>">
+<button type="submit">submit</button>
+</form>
+
 <h1><%= article.title %></h1>
 
 <% sections.forEach( function(section) { %>
@@ -20,9 +29,22 @@
       <p><%= paragraph %></p>
   <%  }
     }); %>
+
+  <form action="/article/<%= article.id %>/section/<%= section.id %>?_method=put" method="POST">
+  <input type="text" name="image_url" value="<%= section.image_url %>">
+  <select name="image_position">
+    <% var img_options = ["none","top","left","right"]; %>
+    <% for (var i=0; i<4;i++) { %><option value="<%= i %>"<% if (i === section.image_position) { %> selected<%}%>><%= img_options[i] %></option> <% } %>
+  <textarea name="body"><%= section.body %></textarea>
+  <button type="submit">submit</button>
+  </form>
+
   </section>
 
 <% }); %>
   
+<form action="/article/<%= article.id %>/sections" method="POST">
+<button type="submit">Add Section</button>
+</form>
 </body>
 </html>

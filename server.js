@@ -45,5 +45,44 @@ app.get("/article/:id/edit", function(req,res) {
   });
 });
 
+// update article info
+app.put("/article/:id", function(req,res) {
+  db.run("UPDATE articles SET title = ?, summary = ?, image_url = ?, created = ? WHERE id = ?",
+    req.body.title, req.body.summary, req.body.image_url, req.body.created, req.params.id,
+    function(err) {
+      if (err) throw(err);
+      res.redirect("/article/"+req.params.id+"/edit");
+    });
+});
+
+// update section info
+app.put("/article/:article_id/section/:section_id", function(req,res) {
+  db.run("UPDATE sections SET body = ?, image_url = ?, image_position = ? WHERE id = ?",
+    req.body.body, req.body.image_url, req.body.image_position, req.params.section_id,
+    function (err) {
+      if (err) throw(err);
+      res.redirect("/article/"+req.params.article_id+"/edit");
+    });
+});
+
+// add new blank section
+app.post("/article/:article_id/sections", function(req,res) {
+  db.run("INSERT INTO sections (article_id,body,image_url,image_position) VALUES (?,'','',0)", req.params.article_id, function(err) {
+    if (err) throw(err);
+    res.redirect("/article/"+req.params.article_id+"/edit");
+  });
+});
+
 
 app.listen(3000, function() {console.log("listening to port 3000");});
+
+
+
+
+
+
+
+
+
+
+

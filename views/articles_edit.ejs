@@ -15,6 +15,13 @@
     <%= article.title %>
     <a href="/article/<%= article.id %>/edit">edit</a>
     <form method="POST" action="/article/<%= article.id %>?_method=delete"><button type="submit">delete</button></form>
+    <form method="POST" action="/article/<%= article.id %>/visible?_method=put">
+    <% if (article.visible > 0) { %>
+      <input type="hidden" name="visible" value="0"><button type="submit">hide</button>
+    <% } else { %>
+      <input type="hidden" name="visible" value="1"><button type="submit">show</button>
+    <% } %>
+    </form>
 
 <% }); %>
 
