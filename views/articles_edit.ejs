@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lemur Learns</title>
+</head>
+<body>
+<nav><a href="/">back to index</a></nav>
+
+<ul>
+
+<% articles.forEach( function(article) { %>
+
+  <li>
+    <%= article.title %>
+    <a href="/article/<%= article.id %>/edit">edit</a>
+    <form method="POST" action="/article/<%= article.id %>?_method=delete"><button type="submit">delete</button></form>
+
+<% }); %>
+
+</ul>
+
+<a href="/articles/new">new article</a>
+
+
+</body>
+</html>

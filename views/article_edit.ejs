@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lemur Learns - <%= article.title %></title>
+</head>
+<body>
+<nav><a href="/">index of articles</a></nav>
+<h1><%= article.title %></h1>
+
+<% sections.forEach( function(section) { %>
+
+  <section>
+  <% if (section.image_position > 0) { %>
+    <img class="section_imagePos<%= section.image_position %>" src="<%= section.image_url %>">
+  <% } %>
+  <% var paragraphs = section.body.split('\n');
+    paragraphs.forEach( function(paragraph) { 
+      if (paragraph.length > 0) { %>
+      <p><%= paragraph %></p>
+  <%  }
+    }); %>
+  </section>
+
+<% }); %>
+  
+</body>
+</html>
