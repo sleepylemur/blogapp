@@ -17,17 +17,22 @@
   </nav>
 </header>
 
+<div class="content">
+<% var i=0 %>
 <% articles.forEach( function(article) { %>
-
+<% if (i++ !== 0) { %> <div class="seperator"></div> <% } %>
 <summary>
+  <div class="title">
   <h2><%= article.title %></h2>
   <h3><%= article.created %></h3>
+  </div>
   <img src="<%= article.image_url %>">
-  <p><%= article.summary %></p>
-  <a href="/article/<%= article.id %>">read more</a>
+  <div class="summarytext"><%= article.summary %></div>
+  <a class="readmore" href="/article/<%= article.id %>">—read more—</a>
 </summary>
 
 <% }); %>
+</div>
 
 
 </body>

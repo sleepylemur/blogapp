@@ -17,13 +17,19 @@
   </nav>
 </header>
 
-<h1><%= article.title %></h1>
+<div class="content">
+<div class="title">
+<h2><%= article.title %></h2>
+<h3><%= article.created %></h3>
+</div>
 
 <% sections.forEach( function(section) { %>
 
   <section>
   <% if (section.image_position > 0) { %>
-    <img class="section_imagePos<%= section.image_position %>" src="<%= section.image_url %>">
+    <div class="section_imagePos<%= section.image_position %>">
+    <img src="<%= section.image_url %>">
+  </div>
   <% } %>
   <% var paragraphs = section.body.split('\n');
     paragraphs.forEach( function(paragraph) { 
@@ -34,6 +40,6 @@
   </section>
 
 <% }); %>
-  
+</div>
 </body>
 </html>
