@@ -7,7 +7,16 @@
   <link rel="stylesheet" type="text/css" href="/public/style.css">
 </head>
 <body>
-<nav><a href="/articles">index of articles</a></nav>
+<header>
+<h1>Lemur Learns</h1>
+  <nav>
+    <ul>
+      <li><a href="/articles">home</a></li>
+      <li><a href="/articles/edit">edit</a></li>
+    </ul>
+  </nav>
+</header>
+
 <h1><%= article.title %></h1>
 
 <% sections.forEach( function(section) { %>

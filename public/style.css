@@ -40,3 +40,31 @@ a {
 section {
   max-width: 500px;
 }
+
+nav {
+  /*background-color: white;*/
+  position: absolute;
+  bottom: 13px;
+  left: 50px;
+  font-size: 20px;
+}
+nav li {
+  display: inline-block;
+}
+nav li a {
+  border: 6px solid white;
+  background-color: black;
+  margin: 0px 10px 0px 10px;
+  padding: 5px 15px 5px 15px;
+  font-style: normal;
+  color: white;
+  text-decoration: none;
+  transition: background-color .3s, color 1s;
+}
+nav li a:hover {
+  border: 11px solid black;
+  padding: 0px 10px 0px 10px;
+  background-color: white;
+  transition: background-color .3s, color 1s;
+  color: black;
+}

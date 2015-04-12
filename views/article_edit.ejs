@@ -3,9 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <title>Lemur Learns - <%= article.title %></title>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="/public/style.css">
 </head>
 <body>
-<nav><a href="/articles/edit">index of articles</a></nav>
+<header>
+<h1>Lemur Learns</h1>
+  <nav>
+    <ul>
+      <li><a href="/articles">home</a></li>
+      <li><a href="/articles/edit">edit</a></li>
+    </ul>
+  </nav>
+</header>
 
 <form action="/article/<%= article.id %>?_method=put" method="POST">
 <label for="title">title</label><input type="text" name="title" value="<%= article.title %>">
