@@ -31,12 +31,16 @@
     }); %>
 
   <form action="/article/<%= article.id %>/section/<%= section.id %>?_method=put" method="POST">
-  <input type="text" name="image_url" value="<%= section.image_url %>">
-  <select name="image_position">
+  <label for="image_url">image url</label><input type="text" name="image_url" value="<%= section.image_url %>">
+  <label for="image_position">image position</label><select name="image_position">
     <% var img_options = ["none","top","left","right"]; %>
     <% for (var i=0; i<4;i++) { %><option value="<%= i %>"<% if (i === section.image_position) { %> selected<%}%>><%= img_options[i] %></option> <% } %>
-  <textarea name="body"><%= section.body %></textarea>
+  <label for="body">content</label><textarea name="body"><%= section.body %></textarea>
   <button type="submit">submit</button>
+  </form>
+
+  <form action="/article/<%= article.id %>/section/<%= section.id %>?_method=delete" method="POST">
+  <button type="submit">delete</button>
   </form>
 
   </section>

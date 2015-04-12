@@ -12,6 +12,9 @@ var db = new sqlite3.Database('blog.db');
 
 // front page - list of article summaries with links to the full-length articles
 app.get("/", function(req,res) {
+  res.redirect("/articles");
+});
+app.get("/articles", function(req,res) {
   db.all("SELECT * FROM articles", function(err,data) {
     // console.log(data);
     if (err) throw err;
@@ -55,6 +58,30 @@ app.put("/article/:id", function(req,res) {
     });
 });
 
+// update article visibility
+app.put("/article/:id/visible", function(req,res) {
+  db.run("UPDATE articles SET visible = ? WHERE id = ?", req.body.visible, req.params.id, function(err) {
+    if (err) throw(err);
+    res.redirect("/articles/edit");
+  });
+});
+
+// delete article
+app.delete("/article/:id", function(req,res) {
+  db.run("DELETE FROM articles WHERE id = ?", req.params.id, function(err) {
+    if (err) throw(err);
+    res.redirect("/articles/edit");
+  });
+});
+
+// new article -- this is the wrong RESTful type at the moment
+app.get("/articles/new", function(req,res) {
+  db.run("INSERT INTO articles (title, summary, image_url, visible, created) VALUES ('','','',0,'')", function(err) {
+    if (err) throw(err);
+    res.redirect("/article/"+this.lastID+"/edit");
+  });
+});
+
 // update section info
 app.put("/article/:article_id/section/:section_id", function(req,res) {
   db.run("UPDATE sections SET body = ?, image_url = ?, image_position = ? WHERE id = ?",
@@ -68,6 +95,14 @@ app.put("/article/:article_id/section/:section_id", function(req,res) {
 // add new blank section
 app.post("/article/:article_id/sections", function(req,res) {
   db.run("INSERT INTO sections (article_id,body,image_url,image_position) VALUES (?,'','',0)", req.params.article_id, function(err) {
+    if (err) throw(err);
+    res.redirect("/article/"+req.params.article_id+"/edit");
+  });
+});
+
+// delete section
+app.delete("/article/:article_id/section/:section_id", function(req,res) {
+  db.run("DELETE FROM sections WHERE id = ?", req.params.section_id, function(err) {
     if (err) throw(err);
     res.redirect("/article/"+req.params.article_id+"/edit");
   });
