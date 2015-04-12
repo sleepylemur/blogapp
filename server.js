@@ -6,6 +6,7 @@ var override = require('method-override');
 var app = express();
 app.use(override('_method'));
 app.use(bodyParser.urlencoded({extended:false}));
+app.use('/public',express.static(__dirname + "/public"));
 
 var db = new sqlite3.Database('blog.db');
 
