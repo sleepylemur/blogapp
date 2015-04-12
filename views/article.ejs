@@ -25,7 +25,7 @@
 
 <% sections.forEach( function(section) { %>
 
-  <section>
+  <section class="section_display">
   <% if (section.image_position > 0) { %>
     <div class="section_imagePos<%= section.image_position %>">
     <img src="<%= section.image_url %>">
@@ -37,6 +37,7 @@
       <p><%= paragraph %></p>
   <%  }
     }); %>
+    <div class="floatclearer"></div>
   </section>
 
 <% }); %>

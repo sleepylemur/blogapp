@@ -5,6 +5,16 @@
   <title>Lemur Learns - <%= article.title %></title>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" type="text/css" href="/public/style.css">
+  <script>
+  function sectionedit(id,isEdit) {
+    var section = document.getElementById("section_id"+id);
+    if (isEdit) {
+      section.className = "section_editing";
+    } else {
+      section.className = "section_previewing";
+    }
+  }
+  </script>
 </head>
 <body>
 <header>
@@ -17,34 +27,60 @@
   </nav>
 </header>
 
-<form action="/article/<%= article.id %>?_method=put" method="POST">
-<label for="title">title</label><input type="text" name="title" value="<%= article.title %>">
-<label for="summary">summary</label><textarea name="summary"><%= article.summary %></textarea>
-<label for="image_url">image url</label><input type="text" name="image_url" value="<%= article.image_url %>">
-<label for="created">date</label><input type="text" name="created" value="<%= article.created %>">
-<button type="submit">submit</button>
-</form>
+<div class="content">
 
-<h1><%= article.title %></h1>
+  <section class="section_previewing" id="section_id0">
+  <ul class="section_edit_toggle"><li class="section_edit_button"><a href="#0" onclick="sectionedit(0,true)">edit</a></li><li class="section_preview_button"><a href="#0" onclick="sectionedit(0,false)">preview</a></li></ul>
+  <div class="section_preview">
+
+    <summary>
+      <div class="title">
+      <h2><%= article.title %></h2>
+      <h3><%= article.created %></h3>
+      </div>
+      <img src="<%= article.image_url %>">
+      <div class="summarytext"><%= article.summary %></div>
+    </summary>
+
+  </div>
+  <div class="section_form">
+
+<form action="/article/<%= article.id %>?_method=put" method="POST">
+  <label for="title">title</label><input type="text" name="title" value="<%= article.title %>">
+  <label for="summary">summary</label><textarea name="summary"><%= article.summary %></textarea>
+  <label for="image_url">image url</label><input type="text" name="image_url" value="<%= article.image_url %>">
+  <label for="created">date</label><input type="text" name="created" value="<%= article.created %>">
+  <button type="submit">submit</button>
+</form>
+</div>
+</section>
+
 
 <% sections.forEach( function(section) { %>
 
-  <section>
-  <% if (section.image_position > 0) { %>
-    <img class="section_imagePos<%= section.image_position %>" src="<%= section.image_url %>">
-  <% } %>
-  <% var paragraphs = section.body.split('\n');
-    paragraphs.forEach( function(paragraph) { 
-      if (paragraph.length > 0) { %>
-      <p><%= paragraph %></p>
-  <%  }
-    }); %>
-
+  <section class="section_previewing" id="section_id<%= section.id %>">
+  <ul class="section_edit_toggle"><li><a href="#0" onclick="sectionedit(<%= section.id %>,true)">edit</a></li><li><a href="#0" onclick="sectionedit(<%= section.id %>,false)">preview</a></li></ul>
+  <div class="section_preview">
+    <section class="section_display">
+    <% if (section.image_position > 0) { %>
+      <img class="section_imagePos<%= section.image_position %>" src="<%= section.image_url %>">
+    <% } %>
+    <% var paragraphs = section.body.split('\n');
+      paragraphs.forEach( function(paragraph) { 
+        if (paragraph.length > 0) { %>
+        <p><%= paragraph %></p>
+    <%  }
+      }); %>
+      <div class="floatclearer"></div>
+    </section>
+  </div>
+  <div class="section_form">
   <form action="/article/<%= article.id %>/section/<%= section.id %>?_method=put" method="POST">
   <label for="image_url">image url</label><input type="text" name="image_url" value="<%= section.image_url %>">
   <label for="image_position">image position</label><select name="image_position">
     <% var img_options = ["none","top","left","right"]; %>
     <% for (var i=0; i<4;i++) { %><option value="<%= i %>"<% if (i === section.image_position) { %> selected<%}%>><%= img_options[i] %></option> <% } %>
+    </select>
   <label for="body">content</label><textarea name="body"><%= section.body %></textarea>
   <button type="submit">submit</button>
   </form>
@@ -52,7 +88,7 @@
   <form action="/article/<%= article.id %>/section/<%= section.id %>?_method=delete" method="POST">
   <button type="submit">delete</button>
   </form>
-
+  </div>
   </section>
 
 <% }); %>
@@ -60,5 +96,6 @@
 <form action="/article/<%= article.id %>/sections" method="POST">
 <button type="submit">Add Section</button>
 </form>
+</div>
 </body>
 </html>

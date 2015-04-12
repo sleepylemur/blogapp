@@ -5,12 +5,12 @@ body {
   font-family: 'Open Sans', sans-serif;
   line-height: 140%;
   background-color: white;
-  color: #222;
+  color: #333;
 }
 
 header {
   font-style: italic;
-  background-color: #222;
+  background-color: #333;
   height: 200px;
   position: relative;
 
@@ -45,7 +45,7 @@ a {
 nav {
   /*background-color: white;*/
   position: absolute;
-  bottom: 13px;
+  bottom: 9px;
   left: 50px;
   font-size: 20px;
 }
@@ -53,21 +53,21 @@ nav li {
   display: inline-block;
 }
 nav li a {
-  border: 6px solid white;
-  background-color: black;
+  border: 4px solid white;
+  background-color: #333;
   margin: 0px 10px 0px 10px;
   padding: 5px 15px 5px 15px;
   font-style: normal;
   color: white;
   text-decoration: none;
-  transition: background-color .3s, color 1s;
+  transition: background-color .3s, color .7s;
 }
 nav li a:hover {
-  border: 11px solid black;
-  padding: 0px 10px 0px 10px;
+  border:7px solid #333;
+  padding: 0px 12px 0px 12px;
   background-color: white;
-  transition: background-color .3s, color 1s;
-  color: black;
+  transition: background-color .3s, color .7s;
+  color: #333;
 }
 .title h2 {
   font-size: 45px;
@@ -81,24 +81,29 @@ nav li a:hover {
 summary {
   margin-left:auto;
   margin-right:auto;
-/*  background-color: blue;
-*/}
+}
 .content {
-  max-width: 60%;
+  width: 600px;
+  max-width: 80%;
   margin-left:auto;
   margin-right:auto;
   text-align: center;
 }
+img {
+  max-width:90%;
+}
 
-section {
-  clear:both;
+.section_display {
   text-align: left;
   line-height: 180%;
+}
+.floatclearer {
+  clear:both;
 }
 
 .seperator {
   max-width: 700px;
-  border-top: 1px black solid;
+  border-top: 1px #666 solid;
   margin: 30px 0px 30px 0px;
 }
 .title {
@@ -113,17 +118,55 @@ section {
   margin-top: 10px;
   text-decoration: none;
 }
-div .section_imagePos1 {
+.section_imagePos1 {
   text-align: center;
 }
-div .section_imagePos2 {
+.section_imagePos2 {
   float: left;
-  margin-right:20px;
+  margin: 10px 20px 10px 0px;
 }
-div .section_imagePos3 {
+.section_imagePos3 {
   float: right;
-  margin-left:20px;
+  margin: 10px 0px 10px 20px;
 }
-div .sectionBody {
-  background-color: blue;
+.section_editing .section_preview {
+  /*color: red;*/
+  display:none;
+}
+.section_editing .section_form {
+  /*color: blue;*/
+}
+.section_previewing .section_preview {
+  border: 4px solid #333;
+  padding: 10px 20px 10px 20px;
+  /*color: yellow;*/
+  /*display: none;*/
+}
+.section_previewing .section_form {
+  /*color: purple;*/
+  display: none;
+}
+.section_edit_toggle {
+  text-align: left;
+  position:relative;
+  top: 4px;
+  left: 0px;
+}
+.section_edit_toggle li {
+  display: inline-block;
+  background-color: white;
+  margin: 0px 10px 0px 10px;
+  padding: 2px 5px 4px 5px;
+  border-width: 4px 4px 0px 4px;
+  border-color: #333;
+  border-style: solid;
+}
+.section_previewing .section_edit_button {
+
+  background-color: beige;
+}
+.section_edit_toggle li a {
+  font-style: normal;
+  color: #333;
+  text-decoration: none;
 }
