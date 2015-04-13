@@ -11,8 +11,8 @@
 <h1>Lemur Learns</h1>
   <nav>
     <ul>
-      <li><a href="/articles">home</a></li>
-      <li><a href="/articles/edit">edit</a></li>
+      <li><a class="nav_a" href="/articles">home</a></li>
+      <li><a class="nav_a" href="/articles/edit">edit</a></li>
     </ul>
   </nav>
 </header>
@@ -43,9 +43,8 @@
 <% }); %>
 <div class="seperator"></div>
 
-<a class="leavecomment_button" href="#" onclick="openModalReplyComment(0)">Leave a Comment</a>
-
-<% function showComment(c) { %>
+<a class="leavecomment_button" href="#" onclick="openModalReplyComment(0)">—leave a comment—</a>
+<% function showComment(c,a) { %>
   <div class="comment">
     <div class="comment_handle"><%= c.handle %>:</div>
     <div class="comment_body">
@@ -54,11 +53,12 @@
     <div class="comment_edit_buttons">
       <a href="#" onclick="openModalReplyComment('<%= c.id %>')">reply</a>
       <a href="#" onclick="openModalEditComment('<%= c.id %>')">edit</a>
+      <a href="/article/<%= a.id %>/comment/<%= c.id %>/delete">remove</a>
     </div>
-    <% c.children.forEach(function(child) { showComment(child); }); %>
+    <% c.children.forEach(function(child) { showComment(child,a); }); %>
   </div>
 <% } %>
-<% comments.top.forEach(function(toplevel_comment) { showComment(toplevel_comment); }); %>
+<% comments.top.forEach(function(toplevel_comment) { showComment(toplevel_comment,article); }); %>
 
 
 <div id="modal_wrapper">

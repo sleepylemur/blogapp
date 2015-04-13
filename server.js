@@ -28,7 +28,7 @@ app.get("/article/:id", function(req,res) {
   db.get("SELECT * FROM articles WHERE id = ?", req.params.id, function(err,article_data) {
     db.all("SELECT * FROM sections WHERE article_id = ?", req.params.id, function(err,section_data) {
       db.all("SELECT * FROM comments WHERE article_id = ?", req.params.id, function(err,comment_data) {
-        res.render("article.ejs",{article:article_data, sections: section_data, comments: parseComments(comment_data)});
+        res.render("article.ejs",{article: article_data, sections: section_data, comments: parseComments(comment_data)});
       });
     });
   });
@@ -128,6 +128,32 @@ app.post("/article/:id/comments", function(req,res) {
         res.redirect("/article/"+req.params.id);
       });
   }
+});
+
+// delete comment  ***** NOT RESTful *****
+app.get("/article/:article_id/comment/:comment_id/delete", function(req,res) {
+  function getChildren(ids,arr,next) {
+    var s = "SELECT id FROM comments WHERE parent_comment="+ids[0];
+    for (var i=1; i<ids.length; i++) {s += " OR parent_comment="+ids[i];}
+    db.all(s, function(err,data) {
+      var children = [];
+      data.forEach(function(child) {children.push(child.id);});
+      if (children.length > 0) {
+        getChildren(children, arr.concat(children), next);
+      } else {
+        next(arr);
+      }
+    });
+  }
+
+  getChildren([req.params.comment_id],[req.params.comment_id], function (ids) {
+    var s = "DELETE FROM comments WHERE id="+ids[0];
+    for (var i=1; i<ids.length; i++) {s+=" OR id="+ids[i];}
+    db.run(s,function(err) {
+      if (err) throw(err);
+      res.redirect("/article/"+req.params.article_id);
+    });
+  });
 });
 
 
