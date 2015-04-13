@@ -1,0 +1,29 @@
+{
+  "name": "blogapp",
+  "version": "1.0.0",
+  "description": "ERD diagram:",
+  "main": "ajaxserver.js",
+  "dependencies": {
+    "body-parser": "^1.12.2",
+    "express": "^4.12.3",
+    "ejs": "^2.3.1",
+    "method-override": "^2.3.2",
+    "sqlite3": "^3.0.5",
+    "request": "^2.55.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sleepylemur/blogapp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sleepylemur/blogapp/issues"
+  },
+  "homepage": "https://github.com/sleepylemur/blogapp"
+}
