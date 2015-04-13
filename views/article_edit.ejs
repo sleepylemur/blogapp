@@ -46,20 +46,24 @@
   <div class="section_form">
 
 <form action="/article/<%= article.id %>?_method=put" method="POST">
-  <label for="title">title</label><input type="text" name="title" value="<%= article.title %>">
-  <label for="summary">summary</label><textarea name="summary"><%= article.summary %></textarea>
-  <label for="image_url">image url</label><input type="text" name="image_url" value="<%= article.image_url %>">
-  <label for="created">date</label><input type="text" name="created" value="<%= article.created %>">
-  <button type="submit">submit</button>
+  <ul class="article_summary_editlist">
+    <li><label for="title">title</label><input type="text" name="title" value="<%= article.title %>"></li>
+    <li><label for="created">date</label><input type="text" name="created" value="<%= article.created %>"></li>
+
+    <li><label for="image_url">image url</label><input type="text" name="image_url" value="<%= article.image_url %>"></li>
+    
+    <li><label for="summary"></label><textarea name="summary"><%= article.summary %></textarea></li>
+  </ul>
+
+  <button class="button_floatleft" type="submit">update</button>
 </form>
 </div>
 </section>
 
-
 <% sections.forEach( function(section) { %>
 
   <section class="section_previewing" id="section_id<%= section.id %>">
-  <ul class="section_edit_toggle"><li><a href="#0" onclick="sectionedit(<%= section.id %>,true)">edit</a></li><li><a href="#0" onclick="sectionedit(<%= section.id %>,false)">preview</a></li></ul>
+  <ul class="section_edit_toggle"><li class="section_edit_button"><a href="#0" onclick="sectionedit(<%= section.id %>,true)">edit</a></li><li class="section_preview_button"><a href="#0" onclick="sectionedit(<%= section.id %>,false)">preview</a></li></ul>
   <div class="section_preview">
     <section class="section_display">
     <% if (section.image_position > 0) { %>
@@ -76,17 +80,21 @@
   </div>
   <div class="section_form">
   <form action="/article/<%= article.id %>/section/<%= section.id %>?_method=put" method="POST">
-  <label for="image_url">image url</label><input type="text" name="image_url" value="<%= section.image_url %>">
+  <div class="image_form_div">
   <label for="image_position">image position</label><select name="image_position">
     <% var img_options = ["none","top","left","right"]; %>
     <% for (var i=0; i<4;i++) { %><option value="<%= i %>"<% if (i === section.image_position) { %> selected<%}%>><%= img_options[i] %></option> <% } %>
     </select>
-  <label for="body">content</label><textarea name="body"><%= section.body %></textarea>
-  <button type="submit">submit</button>
-  </form>
+  <div class="image_url_div">
+  <label for="image_url">image url</label><input class="image_textbox" type="text" name="image_url" value="<%= section.image_url %>">
+  </div>
+  </div>
 
-  <form action="/article/<%= article.id %>/section/<%= section.id %>?_method=delete" method="POST">
-  <button type="submit">delete</button>
+  <label for="body"></label><textarea name="body" class="textarea_section_body"><%= section.body %></textarea>
+  <button class="button_floatleft" type="submit">update</button>
+  </form>
+  <form class="form_delete" action="/article/<%= article.id %>/section/<%= section.id %>?_method=delete" method="POST">
+  <button class="button_floatright" type="submit">delete this section</button>
   </form>
   </div>
   </section>

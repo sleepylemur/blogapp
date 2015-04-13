@@ -48,3 +48,12 @@ articles
     - when the edit tab is selected, the whole section is displayed as a form with fields to edit.
    
     - when the preview tab is selected, the section is rendered as the user would see it
+
+
+
+
+add comment functionality
+style articles page
+style article edit forms
+ajax for article edit forms
+move main menu below header
