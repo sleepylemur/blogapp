@@ -62,15 +62,20 @@ app.put("/article/:id", function(req,res) {
 });
 
 // update article visibility
-app.put("/article/:id/visible", function(req,res) {
-  db.run("UPDATE articles SET visible = ? WHERE id = ?", req.body.visible, req.params.id, function(err) {
-    if (err) throw(err);
+app.get("/article/:id/setvisible", function(req,res) {
+  // console.log(typeof req.query.visible);
+  if (typeof req.query.visible !== 'undefined') {
+    db.run("UPDATE articles SET visible = ? WHERE id = ?", req.query.visible, req.params.id, function(err) {
+      if (err) throw(err);
+      res.redirect("/articles/edit");
+    });
+  } else {
     res.redirect("/articles/edit");
-  });
+  }
 });
 
 // delete article
-app.delete("/article/:id", function(req,res) {
+app.get("/article/:id/delete", function(req,res) {
   db.run("DELETE FROM articles WHERE id = ?", req.params.id, function(err) {
     if (err) throw(err);
     res.redirect("/articles/edit");

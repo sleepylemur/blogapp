@@ -52,8 +52,6 @@ articles
 
 
 
-add comment functionality
-style articles page
-style article edit forms
+style articles edit page
+edit main-menu edits whatever page is open
 ajax for article edit forms
-move main menu below header

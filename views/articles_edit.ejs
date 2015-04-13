@@ -17,27 +17,31 @@
   </nav>
 </header>
 
-<ul>
+<div class="content">
+<ul class="articlelist_list">
 
 <% articles.forEach( function(article) { %>
 
-  <li>
-    <%= article.title %>
-    <a href="/article/<%= article.id %>/edit">edit</a>
-    <form method="POST" action="/article/<%= article.id %>?_method=delete"><button type="submit">delete</button></form>
-    <form method="POST" action="/article/<%= article.id %>/visible?_method=put">
-    <% if (article.visible > 0) { %>
-      <input type="hidden" name="visible" value="0"><button type="submit">hide</button>
-    <% } else { %>
-      <input type="hidden" name="visible" value="1"><button type="submit">show</button>
-    <% } %>
-    </form>
-
+  <li class="articlelist_li">
+    <span class="<% if (article.visible===0) { %>articlelist_hiddentitle<% } else { %>articlelist_title<% } %>"><%= article.title %></span>
+    <span class="articlelist_buttons">
+      <a class="articlelist_button" href="/article/<%= article.id %>/edit">edit</a>
+      <% if (article.visible>0) { %>
+      <a class="articlelist_button" href="/article/<%= article.id %>/setvisible?visible=0">hide</a>
+      <% } else { %>
+      <a class="articlelist_button" href="/article/<%= article.id %>/setvisible?visible=1">show</a>
+      <% } %>
+      <a class="articlelist_button" href="/article/<%= article.id %>/delete">delete</a>
+    </span>
+  </li>
+  <div class="articlelist_seperator"></div>
 <% }); %>
-
+  <li class="articlelist_new">
+    <a href="/articles/new">—new article—</a>
+  </li>
 </ul>
+</div>
 
-<a href="/articles/new">new article</a>
 
 
 </body>
