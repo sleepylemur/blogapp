@@ -266,3 +266,70 @@ img {
 .form_delete {
   display:inline;
 }*/
+
+#modal_wrapper.overlay::before {
+  content: " ";
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  background: #000;
+  background: rgba(0,0,0,0.7);
+}
+
+#modal_window {
+  display: none;
+  z-index: 200;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 360px;
+  padding: 10px 20px;
+  background: #fff;
+  border: 2px solid #333;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+#modal_wrapper.overlay #modal_window {
+  display:block;
+}
+
+#modal_feedback input[type="text"] {
+  margin-left: 20px;
+}
+#modal_feedback textarea {
+  width: 80%;
+  height: 150px;
+}
+
+
+.comment {
+  margin: 5px 5px;
+  /*border: 1px solid black;*/
+  text-align: left;
+  /*display:block;*/
+  /*border:1px solid black;*/
+}
+.comment p {
+  margin: 0px 0px 0px 5px;
+}
+.comment_handle {
+  display:inline-block;
+  font-style: italic;
+  vertical-align: top;
+}
+.comment_body {
+  display: inline-block;
+  border: 1px solid blue;
+  max-width: 60%;
+}
+.comment_edit_buttons {
+  display: inline-block;
+  border: 1px solid yellow;
+  float: right;
+}
+.comment .comment {
+  margin: 20px 0px 20px 40px;
+}

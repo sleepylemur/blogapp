@@ -27,7 +27,9 @@ app.get("/articles", function(req,res) {
 app.get("/article/:id", function(req,res) {
   db.get("SELECT * FROM articles WHERE id = ?", req.params.id, function(err,article_data) {
     db.all("SELECT * FROM sections WHERE article_id = ?", req.params.id, function(err,section_data) {
-      res.render("article.ejs",{article:article_data, sections: section_data});
+      db.all("SELECT * FROM comments WHERE article_id = ?", req.params.id, function(err,comment_data) {
+        res.render("article.ejs",{article:article_data, sections: section_data, comments: parseComments(comment_data)});
+      });
     });
   });
 });
@@ -109,14 +111,43 @@ app.delete("/article/:article_id/section/:section_id", function(req,res) {
   });
 });
 
+// post comment
+app.post("/article/:id/comments", function(req,res) {
+  db.run("INSERT INTO comments (article_id, body, parent_comment, user_handle) VALUES (?,?,?,?)",
+    req.params.id, req.body.comment, req.body.parent_comment, req.body.handle, function(err) {
+      if (err) throw(err);
+      res.redirect("/article/"+req.params.id);
+    });
+});
+
 
 app.listen(3000, function() {console.log("listening to port 3000");});
 
+// turn database style comments into nested object
+function parseComments(comments_db) {
+  var comments = {};
+  var toplevel = [];
 
+  function Comment(id,handle,body) {
+    this.id = id;
+    this.handle = handle;
+    this.body = body;
+    this.children = [];
+  }
 
-
-
-
+  for (var i = 0; i < comments_db.length; i++) {
+    var cur_comment = new Comment(comments_db[i].id, comments_db[i].user_handle, comments_db[i].body);
+    // console.log(cur_comment + " parent "+ comments_db[i].parent_comment);
+    comments[comments_db[i].id] = cur_comment;
+    if (comments_db[i].parent_comment === 0) {
+      toplevel.push(cur_comment);
+    } else {
+      comments[comments_db[i].parent_comment].children.push(cur_comment);
+    }
+  }
+  // console.log(toplevel);
+  return toplevel;
+}
 
 
 
