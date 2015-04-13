@@ -111,13 +111,23 @@ app.delete("/article/:article_id/section/:section_id", function(req,res) {
   });
 });
 
-// post comment
+// post or update comments
 app.post("/article/:id/comments", function(req,res) {
-  db.run("INSERT INTO comments (article_id, body, parent_comment, user_handle) VALUES (?,?,?,?)",
-    req.params.id, req.body.comment, req.body.parent_comment, req.body.handle, function(err) {
-      if (err) throw(err);
-      res.redirect("/article/"+req.params.id);
-    });
+  // if comment_id is 0 than this is a new comment, otherwise do an update
+  if (req.body.comment_id == 0) {
+    db.run("INSERT INTO comments (article_id, body, parent_comment, user_handle) VALUES (?,?,?,?)",
+      req.params.id, req.body.comment, req.body.parent_comment, req.body.handle, function(err) {
+        if (err) throw(err);
+        res.redirect("/article/"+req.params.id);
+      });
+  } else {
+    db.run("UPDATE comments SET article_id = ?, body = ?, parent_comment = ?, user_handle = ? WHERE id = ?",
+      req.params.id, req.body.comment, req.body.parent_comment, req.body.handle, req.body.comment_id,
+      function(err) {
+        if (err) throw(err);
+        res.redirect("/article/"+req.params.id);
+      });
+  }
 });
 
 
@@ -128,15 +138,16 @@ function parseComments(comments_db) {
   var comments = {};
   var toplevel = [];
 
-  function Comment(id,handle,body) {
+  function Comment(id,handle,body,parent) {
     this.id = id;
     this.handle = handle;
     this.body = body;
+    this.parent = parent;
     this.children = [];
   }
 
   for (var i = 0; i < comments_db.length; i++) {
-    var cur_comment = new Comment(comments_db[i].id, comments_db[i].user_handle, comments_db[i].body);
+    var cur_comment = new Comment(comments_db[i].id, comments_db[i].user_handle, comments_db[i].body, comments_db[i].parent_comment);
     // console.log(cur_comment + " parent "+ comments_db[i].parent_comment);
     comments[comments_db[i].id] = cur_comment;
     if (comments_db[i].parent_comment === 0) {
@@ -146,7 +157,7 @@ function parseComments(comments_db) {
     }
   }
   // console.log(toplevel);
-  return toplevel;
+  return {db: comments, top: toplevel};
 }
 
 

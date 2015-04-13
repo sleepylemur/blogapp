@@ -43,6 +43,8 @@
 <% }); %>
 <div class="seperator"></div>
 
+<a class="leavecomment_button" href="#" onclick="openModalReplyComment(0)">Leave a Comment</a>
+
 <% function showComment(c) { %>
   <div class="comment">
     <div class="comment_handle"><%= c.handle %>:</div>
@@ -50,14 +52,14 @@
     <% c.body.split('\n').forEach(function(para) { %><p><%= para %></p><% }); %>
     </div>
     <div class="comment_edit_buttons">
-      <a href="#0" onclick="openModal(<%= c.id %>)">reply</a>
+      <a href="#" onclick="openModalReplyComment('<%= c.id %>')">reply</a>
+      <a href="#" onclick="openModalEditComment('<%= c.id %>')">edit</a>
     </div>
     <% c.children.forEach(function(child) { showComment(child); }); %>
   </div>
 <% } %>
-<% comments.forEach(function(toplevel_comment) { showComment(toplevel_comment); }); %>
+<% comments.top.forEach(function(toplevel_comment) { showComment(toplevel_comment); }); %>
 
-<button id="modal_open" onclick="openModal(0)">Leave Comment</button>
 
 <div id="modal_wrapper">
   <div id="modal_window">
@@ -67,10 +69,11 @@
     <p>Leave a comment</p>
 
     <form id="modal_feedback" method="POST" action="/article/<%= article.id %>/comments">
-      <p><label>handle<input type="text" autofocus name="handle" required></label></p>
+      <p><label>handle<input id="comment_handle_box" type="text" autofocus name="handle" required></label></p>
       <p><label for="comment">comment</label></p>
-      <textarea name="comment" required></textarea>
-      <input id="parent_comment_id_box" type="hidden" name="parent_comment" value="0">
+      <textarea id="comment_body_box" name="comment" required></textarea>
+      <input id="parent_comment_id_box" type="hidden" name="parent_comment" value="0"> <!-- 0 means it's a top level comment. anything else means it's a reply -->
+      <input id="comment_id_box" type="hidden" name="comment_id" value="0"> <!-- 0 means it's a new comment, otherwise we update the comment with that id -->
       <p><button type="submit">Leave Comment</button></p>
     </form>
   </div>
@@ -84,13 +87,33 @@
   // Original JavaScript code by Chirp Internet: www.chirp.com.au
   // Please acknowledge use of this code by including this header.
   var modalWrapper,modalWindow;
+  var comments = <%- JSON.stringify(comments.db) %>; // very ugly hack to pass in all comments
+
+  function openModalReplyComment(comment_parent) {
+    modalWrapper.className = "overlay";
+    modalWindow.style.marginTop = (-modalWindow.offsetHeight)/2 + "px";
+    modalWindow.style.marginLeft = (-modalWindow.offsetWidth)/2 + "px";
+    document.getElementById("parent_comment_id_box").value = comment_parent;
+  }
+
+  function openModalEditComment(comment_id) {
+    console.log(comments);
+    var mycomment = comments[comment_id];
+    modalWrapper.className = "overlay";
+    modalWindow.style.marginTop = (-modalWindow.offsetHeight)/2 + "px";
+    modalWindow.style.marginLeft = (-modalWindow.offsetWidth)/2 + "px";
+    document.getElementById("parent_comment_id_box").value = mycomment.parent;
+    document.getElementById("comment_body_box").value = mycomment.body;
+    document.getElementById("comment_handle_box").value = mycomment.handle;
+    document.getElementById("comment_id_box").value = comment_id;
+  }
 
   function openModal(comment_parent) {
     modalWrapper.className = "overlay";
     modalWindow.style.marginTop = (-modalWindow.offsetHeight)/2 + "px";
     modalWindow.style.marginLeft = (-modalWindow.offsetWidth)/2 + "px";
     document.getElementById("parent_comment_id_box").value = comment_parent;
-  };
+  }
 
   var modal_init = function() {
 
