@@ -1,5 +1,7 @@
 #blogapp
 
+## app for editing and viewing a fictional blog.
+
 ERD diagram:
 
 ```
@@ -48,10 +50,3 @@ articles
     - when the edit tab is selected, the whole section is displayed as a form with fields to edit.
    
     - when the preview tab is selected, the section is rendered as the user would see it
-
-
-
-
-style articles edit page
-edit main-menu edits whatever page is open
-ajax for article edit forms
