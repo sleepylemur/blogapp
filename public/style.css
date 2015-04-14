@@ -41,7 +41,7 @@ a {
 }
 a:visited, a:link {
   color: #3C42A7;
-  transition: color .2s;
+  transition: color .7s;
 }
 a:hover {
   color: #5EA4FF;
@@ -177,31 +177,37 @@ img {
   border-style: solid;
 }
 .section_previewing .section_edit_button {
-  padding: 2px 13px 3px 13px;
+  padding: 0px 13px 1px 13px;
   border-width: 1px 1px 1px 1px;
-  background-color: #EEE;
+  background: linear-gradient(white, white, #EEE);
 }
 .section_previewing .section_preview_button {
-  padding: 2px 13px 4px 13px;
+  padding: 0px 13px 2px 13px;
   border-width: 1px 1px 0px 1px;
   background-color: white;
 }
 .section_editing .section_edit_button {
-  padding: 2px 13px 4px 13px;
+  padding: 0px 13px 2px 13px;
   border-width: 1px 1px 0px 1px;
   background-color: white;
 }
 .section_editing .section_preview_button {
-  padding: 2px 13px 3px 13px;
+  padding: 0px 13px 1px 13px;
   border-width: 1px 1px 1px 1px;
-  background-color: #EEE;
+  background: linear-gradient(white, white, #EEE);
 }
 .section_edit_toggle li a {
-  font-size: 12px;
+  font-size: 13px;
   /*font-weight: 300;*/
   font-style: normal;
-  color: #333;
+  /*color: #333;*/
   text-decoration: none;
+  color: #3C42A7;
+  transition: color .7s;
+}
+.section_edit_toggle li a:hover {
+  color: #5EA4FF;
+  transition: color .2s;
 }
 
 .textarea_section_body {
@@ -257,15 +263,42 @@ img {
   position: relative;
   bottom: 30px;
   font-family: 'Open Sans', sans-serif;
-  font-size: 12px;
+  font-size: 13px;
+  padding: 3px 12px;
+  background:white;
 }
 .button_floatleft {
   float: left;
   margin-left: 40px;
+  color: #3C42A7;
+  transition: color .7s;
+  border: 1px solid #AAA;
 }
 .button_floatright {
   float: right;
   margin-right: 40px;
+  color: #3C42A7;
+  transition: color .7s;
+  border: 1px solid #AAA;
+}
+.button_floatleft:hover, .button_floatright:hover {
+  color: #5EA4FF;
+  transition: color .2s;
+  cursor: pointer;
+}
+.section_add_button {
+  font-style: italic;
+  font-size:25px;
+  color: #3C42A7;
+  transition: color .7s;
+  background: white;
+  border: none;
+  margin-bottom: 25px;
+}
+.section_add_button:hover {
+  color: #5EA4FF;
+  transition: color .2s;
+  cursor: pointer;
 }
 /*.section_form button {
   display:inline;
@@ -341,9 +374,17 @@ img {
   /*border: 1px solid yellow;*/
   float: right;
 }
-.comment .comment {
-  margin: 20px 0px 20px 40px;
+.comment_edit_buttons a {
+  margin: 0px 1px;
 }
+.comment .comment {
+  margin: 20px 0px 20px 25px;
+}
+.comment_children_container {
+  border-left: 1px solid #CCC;
+  margin: 0px 0px 0px 15px;
+}
+
 
 
 /********************  articles edit ***********************/

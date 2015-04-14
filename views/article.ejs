@@ -55,7 +55,11 @@
       <a href="#" onclick="openModalEditComment('<%= c.id %>')">edit</a>
       <a href="/article/<%= a.id %>/comment/<%= c.id %>/delete">remove</a>
     </div>
+    <% if (c.children.length > 0) { %>
+    <div class="comment_children_container">
     <% c.children.forEach(function(child) { showComment(child,a); }); %>
+    </div>
+    <% } %>
   </div>
 <% } %>
 <% comments.top.forEach(function(toplevel_comment) { showComment(toplevel_comment,article); }); %>
