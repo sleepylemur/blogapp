@@ -14,7 +14,7 @@ articles
     |        
     |*   *    1
  comments------users
- 1|   *| 
+ 1|   *|       (unused at this point)
   |    |
   |____/
 
