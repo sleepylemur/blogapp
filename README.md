@@ -1,5 +1,5 @@
 #blogapp
-
+[check it out](evangriffiths.nyc:3000/)
 ## app for editing and viewing a fictional blog.
 
 ERD diagram:
